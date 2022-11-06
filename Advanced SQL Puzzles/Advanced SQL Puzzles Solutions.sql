@@ -218,11 +218,11 @@ SELECT  CustomerID, PhoneNumber AS Home
 FROM    #PhoneDirectory
 WHERE   [Type] = 'Home'
 )
-SELECT  a.CustomerID,b.Cellular,c.Work,d.Home
-FROM    (SELECT DISTINCT CustomerID FROM #Phonedirectory) a LEFT OUTER JOIN
-        cte_Cellular b ON a.CustomerID = b.CustomerID LEFT OUTER JOIN
-        cte_Work c ON a.CustomerID = c.CustomerID LEFT OUTER JOIN
-        cte_Home d ON a.CustomerID = d.CustomerID;
+SELECT distinct pd.CustomerID, Cellular, Work, Home
+FROM      PhoneDirectory as pd
+LEFT JOIN cte_Cellular   as cell  ON pd.CustomerID = cell.CustomerID
+LEFT JOIN cte_Work       as w     ON w.CustomerID  = cell.CustomerID
+LEFT JOIN cte_Home       as h     ON h.CustomerID  = cell.CustomerID;
 
 --Solution 3
 --MAX
